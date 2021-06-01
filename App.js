@@ -23,7 +23,6 @@ import { combineReducers, createStore } from 'redux';
 import questionsReducer from './src/store/reducers/questions';
 
 import { Provider } from 'react-redux';
-import QuestionsScreen from './src/screens/QuestionsScreen';
 
 
 
@@ -34,17 +33,13 @@ const App: () => Node = () => {
 
   const store = createStore(rootReducer);
 
-
   return (
+    <Provider store={store}>
+      <NavigationContainer>
+        <QuestionStackScreen />
+      </NavigationContainer>
+    </Provider>
 
-
-        <Provider store={store}>
-          <NavigationContainer>
-            {console.log("hi te")}
-            <QuestionStackScreen />
-          </NavigationContainer>
-        </Provider>
-    
   );
 };
 

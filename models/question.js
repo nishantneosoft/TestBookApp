@@ -1,5 +1,4 @@
 // implemented in dummy-data.js    
-import Choices from "./choices";
 class Question {
 	constructor(id,name,choices = []) {
 		this.id = id,
