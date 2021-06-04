@@ -1,8 +1,8 @@
 export const ADD_QUESTION = 'ADD_QUESTION';
 export const LOCK_USER_CHOOSEN_OPTION = 'LOCK_USER_CHOOSEN_OPTION';
 
-export const addQuestion = (id) => {
-    return { type: ADD_QUESTION, payload : id }
+export const addQuestion = (data) => {
+    return { type: ADD_QUESTION, payload : data }
 }
 
 export const lockUserChoosenOption = (option) => {

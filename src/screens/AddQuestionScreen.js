@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, SafeAreaView, Text, Platform, StatusBar, TextInput, FlatList, ScrollView, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard, Button } from 'react-native';
+import { View, StyleSheet, SafeAreaView, Text, Platform, StatusBar, TextInput, FlatList, ScrollView, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard, Button, Alert } from 'react-native';
+import Choice from '../../models/choices';
+import Question from '../../models/question';
+import { addQuestion } from '../store/actions/questions';
+import { useSelector, useDispatch } from 'react-redux';
 
 
 
@@ -14,6 +18,8 @@ const AddQuestionScreen = (props) => {
 	const [optionDText, setOptionDText] = React.useState(null);
 	const [optionEText, setOptionEText] = React.useState(null);
 
+	const dispatch = useDispatch();
+
 	const onChangeTextHandler = text => { setQuestionText(text) };
 
 	const onChangeOptionATextHandler = text => { setOptionAText(text) };
@@ -23,7 +29,7 @@ const AddQuestionScreen = (props) => {
 	const onChangeOptionETextHandler = text => { setOptionEText(text) };
 
 
-	const [numberOfOptions, setNumberOfOptions] = useState(5);
+	const [numberOfOptions, setNumberOfOptions] = useState(2);
 
 	const getCorrectOptionName = (option) => {
 		if (option === 0) {
@@ -48,7 +54,7 @@ const AddQuestionScreen = (props) => {
 
 		
 
-		// setTextInputOptionsArray([]);
+		setTextInputOptionsArray([]);
 
 		for (let i = 0; i < numberOfOptions; i++) {
 			let currentOptionName = getCorrectOptionName(i);
@@ -82,16 +88,35 @@ const AddQuestionScreen = (props) => {
 
 	}
 
+	const onSubmit = async () => {
+		let formData = {
+		   question : questionText,
+			optionA : optionAText,
+			optionB : optionBText,
+			optionC : optionCText,
+			optionD : optionDText,
+			optionE : optionEText
+		};
+		try {
+			await dispatch(addQuestion(formData));
+		  } catch (err) {
+			console.log(JSON.stringify(err));
+		  }
+		setOptionAText(null);
+		setOptionBText(null);
+		setOptionCText(null);
+		setOptionDText(null);
+		setOptionEText(null);
+	} 
+
 
 	return (
 		<>
-						{texInputOptionsArray.map((data) => console.log("alksdjflkja",data) )}
-
-		{console.log("inside render")}
 			<StatusBar barStyle={Platform.OS !== 'android' ? 'light-content' : 'dark-content'} backgroundColor="#000" />
 			<SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 				<ScrollView>
-				<Text style={{color : '#493323'}}>Enter The Question Below</Text>
+					<View style={{marginTop : 30}}>
+				<Text style={{color : '#493323',alignSelf : 'center',fontSize : 16}}>Enter The Question Below</Text>
 				<TextInput
 					style={{...styles.input,color : 'black'}}
 					onChangeText={onChangeTextHandler}
@@ -99,7 +124,17 @@ const AddQuestionScreen = (props) => {
 					placeholder="Enter Question Here"
 					placeholderTextColor="black"
 				/>
-				<Text style={{color : '#493323'}}>Enter The Options Below</Text>
+				</View>
+				<View style={{flexDirection : 'row',justifyContent : 'space-evenly',alignItems : 'center'}}>
+				<Text style={{color : '#493323',fontSize : 16}}>Enter The Options Below</Text>
+                 <Button title="Add Option" color="blue" onPress={() => { 
+					 if(numberOfOptions === 5)
+					 {
+						 alert("Max 5 Options Allowed");
+						  return; 
+				    } 
+					setNumberOfOptions(numberOfOptions + 1)}}  />
+				</View>
 		
 		
 				{/* <FlatList
@@ -110,6 +145,10 @@ const AddQuestionScreen = (props) => {
 				/>  */}
 				{texInputOptionsArray.map((data,index) => <View key={index}>{data}</View>)}
     
+               <View style={{flexDirection : 'row',justifyContent : 'space-evenly',alignItems : 'center',marginBottom : 30}}>
+				<Button title="Submit" color="blue" onPress={() => { onSubmit()}}/>
+				<Button title="Done" color="blue" onPress={() => { }}/>
+				</View>
 				</ScrollView>
 			</SafeAreaView>
 		</>

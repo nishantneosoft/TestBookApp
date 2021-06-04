@@ -33,7 +33,8 @@ const QuestionsScreen = (props) => {
         <>
             <StatusBar barStyle={Platform.OS !== 'android' ? 'light-content' : 'dark-content'} backgroundColor="#000" />        
             <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-           {questionList.length !== 0 && (<FlatList
+                
+           {questionList !== undefined && questionList.length !== 0 && (<FlatList
                 data={questionList}
                 showsVerticalScrollIndicator={false}
                 // contentContainerStyle={{width : Dimensions.get('window').width}}
@@ -49,7 +50,7 @@ const QuestionsScreen = (props) => {
                 }}
                 ItemSeparatorComponent={FlatListItemSeparator}
             />)}
-            {questionList.length === 0 && renderNoQuestionsFound()}
+            {questionList !== undefined && questionList.length === 0 && renderNoQuestionsFound()}
         </SafeAreaView>
         </>
     )
