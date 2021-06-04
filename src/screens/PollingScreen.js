@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet,SafeAreaView,Text} from 'react-native';
 
 
 
 const PollingScreen = (props) => {
+	const [question,setQuestion] = useState(props.route.params.userChoosenQuestion)
 	// `meals` is the reducer identifier (see in App.js)
 	// const favMeals = useSelector((state) => state.meals.favoriteMeals);
 

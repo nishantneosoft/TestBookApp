@@ -43,8 +43,8 @@ const QuestionsScreen = (props) => {
                     let touchableBgColor = item.index % 2 === 0 ? '#005792' : 'grey';
                     let questionColor = item.index % 2 === 0 ? 'white' : 'white';
                     return (
-                        <TouchableOpacity onPress={() => { props.navigation.navigate('Polling') }} style={{ justifyContent: 'center', alignItems: 'center', width: Dimensions.get('window').width - 20, marginVertical: 10, minHeight: 50, flex: 1, justifyContent: 'center', borderColor: 'grey', borderWidth: 1, borderRadius: 10, backgroundColor: touchableBgColor }}>
-                            <Text style={{ textAlign: 'center', fontSize: 14, color: questionColor }}>{item.item.name}</Text>
+                        <TouchableOpacity onPress={() => { props.navigation.navigate('Polling',{userChoosenQuestion : item.item}) }} style={{ justifyContent: 'center', alignItems: 'center', width: Dimensions.get('window').width - 20, marginVertical: 10, minHeight: 100, flex: 1, justifyContent: 'center', borderColor: 'grey', borderWidth: 1, borderRadius: 10, backgroundColor: touchableBgColor }}>
+                            <Text style={{paddingHorizontal : 10, textAlign: 'center', fontSize: 18, color: questionColor }}>{item.item.name}</Text>
                         </TouchableOpacity>
                     )
                 }}
